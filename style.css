@@ -1,0 +1,19 @@
+html {
+    background-color: #202020;
+    color: #FFFFFF;
+}
+body {
+    margin:1em auto;
+    max-width:40em;
+    padding:0 .5em;
+    font:1.2em/1.5 serif;
+}
+h1,h2,h3 {
+    line-height:1.2;
+}
+a,a:link {
+    color: #A0A0A0;
+    text-decoration: underline;
+}
+a:active,a:visited { color: #808080; }
+a:hover { color: #F0F0F0; }

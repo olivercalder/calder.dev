@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+<title>Research</title>
+<link href="style.css" rel="stylesheet" type="text/css"></style>
+</head>
+<body>
+<h1>Research</h1>
+
+<h2>Serverless Rust Unikernel</h2>
+<h3>Summer 2020, Winter 2021. Advised by Aaron Bauer, Department of Computer Science, Carleton College.</h3>
+
+I wrote a unikernel in Rust, designed to carry out a single task in a
+serverless environment. Initially, I benchmarked a "hello world" task
+against Docker, a Linux VM, and a process, and the unikernel kernel
+scaled much better than either Docker or a VM, only falling short of
+the process at extremely high throughput.
+
+The source code for the unikernel can be found at
+<a href=https://github.com/olivercalder/rust-kernel>https://github.com/olivercalder/rust-kernel</a>.
+
+The scripts used in benchmarking the unikernel, as well as details
+on the methodology and results, can be found at
+<a href=https://github.com/olivercalder/kernel-benchmark>https://github.com/olivercalder/kernel-benchmark</a>.
+
+Later, I implemented a standalone png thumbnail generator titled
+rusty-nail as a sample serverless workload for the unikernel, and then
+moved it into a standalone program which can be invoked directly or
+integrated into a VM, Docker/Podman, or other systems. The kernel
+benchmarks were adapted to use the thumbnail generator, and the results
+are available in that repository.
+
+The standalone code for rusty-nail can be found at
+<a href=https://github.com/olivercalder/rusty-nail>https://github.com/olivercalder/rusty-nail</a>.
+
+<h2>Character Text Pipeline:</h2>
+<h3>Winter 2019. Advised by Eric Alexander, Department of Computer Science, Carleton College.</h3>
+
+
+This is an extension of the work from the Sonic Signatures project,
+built to process texts from the EEBO-TCP project. This allows
+researchers to extract and clean the speech of individual characters
+from large xml files, and organize these characters' speech into a
+format which can be easily translated and analyzed, such as by the
+scripts from the Sonic Signatures project.
+
+Source code and a more verbose (and up-to-date) description can be found at
+<a href=https://github.com/olivercalder/character-text-pipeline>https://github.com/olivercalder/character-text-pipeline</a>.
+
+<h2>Sonic Signatures:</h2>
+<h3>Summer 2019. Advised by Eric Alexander, Department of Computer Science, Carleton College.</h3>
+
+A machine learning and data visualization toolkit written to analyze
+phonological patterns in the speech of characters from Shakespeare's
+plays. Source code and a more verbose description can be found at
+<a href=https://github.com/olivercalder/sonic-signatures>https://github.com/olivercalder/sonic-signatures</a>.
+
+Advised by Eric Alexander (Department of Computer Science, Carleton College).

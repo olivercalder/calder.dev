@@ -1,0 +1,543 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{qtree}
+%\usepackage{tikz-qtree}
+\usepackage{forest}
+\usepackage{pict2e}
+\usepackage{tree-dvips}
+\usepackage{rotate}
+
+\renewcommand{\qtreepadding}{2pt}
+
+\title{Analysis of the \textit{est-ce que} construction and its relation to WH question formation in French}
+\author{Oliver Calder}
+\date{16 March 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+
+In this paper, we examine the structure and interpretation of the ``est-ce que" construction in French as motivation for a broader critique of the current model for relative clauses. We also explore the head raising proposal of Jan-Wouter Zwart as a possible solution to the problems which arise as a result of the current relative clause model. 
+
+Lastly, we propose a new model for relative clauses which takes into account the greater diversity of phrase types which can be modified by them. This new model also better encode the semantic relationship between the modified noun and the relative clause, and will address other problems which will arise in the analysis of ``est-ce que".
+
+\section{Introduction to French WH Questions}
+
+Unlike many languages with which it otherwise shares many similarities, French is unique in its variety of valid question constructions. In particular, French allows both WH movement and WH \textit{in situ} questions, along with inversion and the ``est-ce que" construction. All except the latter are not the focus of the paper; however, a background knowledge of the other constructions, particularly inversion, will aid in understanding the analyses which are to come.
+
+The following examples in this section are courtesy of Eponine Senay, who provided grammaticality judgements and expertise regarding the differences between formal and colloquial French.
+
+First, we see a WH \textit{in situ} construction, where neither the surface structure nor the deep structure are changed from their declarative form. This method of question formation is found in informal spoken French, but is not acceptable in either formal or written French. Example 2.0.1 shows a tree for an \textit{in situ} construction.
+
+\begin{enumerate}
+    \item[(2.0.1)]
+\Tree
+[.CP
+    [
+    ]
+    [.C\1 C
+        [.TP \node{specTP}{_{NOM}}
+            [.T\1 \node{Thead}{T_{\substack{[NOM] \\ [pres]}}}
+                [.vP \node{subjDP}{ \qroof{\textit{Tu}}.DP }
+                    [.v\1 \node{vhead}{v_{[ACC]}}
+                        [.VP
+                            [
+                            ]
+                            [.V\1 
+                                V\\\node{Vhead}{\textit{vois}} 
+                                \qroof{\textit{qui}}.DP_{ACC}
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+]
+
+\anodecurve[l]{subjDP}[b]{specTP}{0.4in}
+\anodecurve[l]{Vhead}[b]{vhead}{0.4in}
+\anodecurve[b]{vhead}[b]{Thead}{0.5in}
+
+\end{enumerate}
+
+A similar construction exists which allows the raising of the WH word while the order of other words unchanged. In particular, the WH word is moved to the specifier of the $CP$, but there is no other indication of question formation, as we see  with ``dummy do" in English. As with the WH \textit{in situ} construction above, this structure is only acceptable in colloquial French. An example of such a tree is shown in 2.0.2.
+
+\begin{enumerate}
+    \item[(2.0.2)]
+\Tree
+[.CP 
+    \node{specCP}{}
+    [.C\1 C_{[+WH]}
+        [.TP \node{specTP}{_{NOM}} 
+            [.T\1 \node{Thead}{T_{\substack{[NOM] \\ [pres]}}} 
+                [.vP \node{subjDP}{ \qroof{\textit{tu}}.DP } 
+                    [.v\1 \node{vhead}{v_{[ACC]}} 
+                        [.VP
+                            [
+                            ]
+                            [.V\1 
+                                V\\\node{Vhead}{\textit{vois}} 
+                                \node{DP}{ \qroof{\textit{Qui}}.DP_{ACC} }
+                            ]
+                        ]
+                    ]
+                ] 
+            ] 
+        ] 
+    ] 
+]
+
+\anodecurve[l]{subjDP}[b]{specTP}{0.4in}
+\anodecurve[l]{Vhead}[b]{vhead}{0.4in}
+\anodecurve[b]{vhead}[b]{Thead}{0.5in}
+\anodecurve[bl]{DP}[b]{specCP}{0.9in}
+\end{enumerate}
+
+\pagebreak
+A third method of question formation is verb inversion, where the verb which resides in the $T$ head moves up to the main $C$ head, thus satisfying the $_{+Q}$ marking. Inversion is the most formal of the question formation techniques, and is thus very prevalent in written contexts and slightly less prevalent in spoken language. Unlike the previous two examples, inversion also requires that the WH word, if one exists, must be moved to the specifier of the $CP$. A sample tree is shown in example 2.0.3.
+
+\begin{enumerate}
+    \item[(2.0.3)]
+\Tree
+[.CP 
+    \node{specCP}{}
+    [.C\1 \node{Chead}{ C_{\substack{[+WH] \\ [+Q]}} }
+        [.TP \node{specTP}{_{NOM}} 
+            [.T\1 \node{Thead}{T_{\substack{[NOM] \\ [pres]}}} 
+                [.vP \node{subjDP}{ \qroof{\textit{tu}}.DP } 
+                    [.v\1 \node{vhead}{v_{[ACC]}} 
+                        [.VP
+                            [
+                            ]
+                            [.V\1 
+                                V\\\node{Vhead}{\textit{vois}}
+                                \node{WH}{ \qroof{\textit{Qui}}.DP_{ACC} }
+                            ]
+                        ]
+                    ]
+                ] 
+            ] 
+        ] 
+    ] 
+]
+
+\anodecurve[l]{subjDP}[b]{specTP}{0.6in}
+\anodecurve[l]{Vhead}[b]{vhead}{0.4in}
+\anodecurve[b]{vhead}[b]{Thead}{0.5in}
+\anodecurve[b]{Thead}[b]{Chead}{0.6in}
+\anodecurve[bl]{WH}[b]{specCP}{0.9in}
+\end{enumerate}
+
+\section{Analysis of the \textit{est-ce que} construction}
+
+The phrase ``est-ce que" appears quite commonly in both formal and colloquial French, and is versatile in forming questions of many forms. For example, it can form yes/no questions: ``Est-ce que tu bois du lait?" $\implies$ ``Do you drink milk?"; WH questions where the WH replaces an unknown object: ``Qui est-ce que tu connais?" $\implies$ ``Who do you know?"; and WH questions with adjunct unknowns: ``Quand est-ce que tu joues au foot?" $\implies$ ``When do you play football?"
+
+However, there exist several distinct interpretations of the syntactic structure of ``est-ce que". Three possible constructions which will be considered in this paper are the ``dummy do" interpretation, the ``case that" interpretation, and the relative clause interpretation. While each functionally expresses the same concept, there exist subtleties which differentiate their meanings and dramatically change the syntactic structures of the phrases in which they occur.
+
+\pagebreak
+\subsection{``Dummy do" Interpretation}
+
+The ``dummy do" interpretation is by far the simplest of those presented in this paper. In this interpretation, the phrase ``est-ce que" behaves just as the ``do" does in English question formation. That is, ``do" is not a true verb or auxiliary, but instead comes into existence in the $T$ head before moving to the $C$ head in order to satisfy $_{+Q}$. Similarly, ``est-ce que" is born in place, as seen in example 3.1.1.
+
+\begin{enumerate}
+    \item[(3.1.1)]
+\Tree
+[.CP 
+    \node{specCP}{}
+    [.C\1 
+        C_{\substack{[+WH] \\ [+Q]}}\\\textit{est-ce que}
+        [.TP 
+            \node{specTP}{_{NOM}} 
+            [.T\1 
+                \node{Thead}{T_{\substack{[NOM] \\ [pres]}}} 
+                [.vP 
+                    \node{subjDP}{ \qroof{\textit{Lucas}}.DP } 
+                    [.v\1 
+                        \node{vhead}{v_{[ACC]}} 
+                        [.VP
+                            [
+                            ]
+                            [.V\1 
+                                V\\\node{Vhead}{\textit{connait}}
+                                \node{WH}{ \qroof{\textit{Qui}}.DP_{ACC} }
+                            ]
+                        ]
+                    ]
+                ] 
+            ] 
+        ] 
+    ] 
+]
+
+\anodecurve[l]{subjDP}[b]{specTP}{0.6in}
+\anodecurve[l]{Vhead}[b]{vhead}{0.4in}
+\anodecurve[b]{vhead}[b]{Thead}{0.5in}
+\anodecurve[bl]{WH}[b]{specCP}{1in}
+
+    \item[(3.1.2)] \begin{tabular}{ cccc }
+        Qui & est-ce que & Lucas & connait \\
+        Who & does & Lucas & know$_{3SG}$
+    \end{tabular}
+
+    ``Who does Lucas know?"
+\end{enumerate}
+
+This question resolves through the elimination of ``est-ce que" with the movement of the object $DP$ back to its birthplace, since it is no longer needed for question formation. This resolution is shown in example 3.1.3.
+
+\begin{enumerate}
+    \item[(3.1.3)] \begin{tabular}{ ccc }
+        Lucas & connait & Olivier \\
+        Lucas & know$_{3SG}$ & Oliver
+    \end{tabular}
+
+    ``Lucas knows Oliver."
+\end{enumerate}
+
+
+
+As shown in figures 3.1.1 and 3.1.2, ``est-ce que" behaves very similarly to ``do" in English. However, there are several problems with this interpretation. Firstly, ``do" is born in the $T$ head, as other auxiliary verbs may be born, and from there moves into $C$ head to satisfy $_{+Q}$. This is not possible in French because French is a verb raising rather than an affix lowering language. In French, the first verb or auxiliary in the $TP$ moves into $T$ head to get its proper conjugation, as shown in figure 3.1.1. This means that ``est-ce que" cannot be born in the the $T$ head, as this would prohibit the necessary movement of the verb. One could argue that, in order to account for this, we may allow ``est-ce que" to be born in $C$ head. This choice would resolve this particular problem, though it still remains worthy of note.
+
+Another problem which differentiates ``do" from ``est-ce que" is that ``do" is a single word which can only be interpreted as a verb or auxiliary, while ``est-ce que" is a construction of three words which individually have meanings very different from ``do". It is the interpretations of these three individual words which drive the following two proposals. However, the ``dummy do" analysis of ``est-ce que" does hold some merit, particularly in spoken French, where the whole phrase is interpreted more as a single lexical unit than as separate words.
+
+\subsection{``The case that" Interpretation}
+
+Another analysis of the ``est-ce que" construction relies on several observations. Firstly, the phrase ``c'est" is very common, particularly in spoken French, as a contraction of the pronoun ``ce" (``this/that") and the verb ``est" (``is"). ``C'est" is used as an indicator of a state of being, as in ``C'est trop cher" $\implies$ ``It's too expensive" or ``C'est vrai" $\implies$ ``It's true", or as an answer to a question ``C'est cela" $\implies$ ``It's that one". Secondly, inversion is used in question formation, and ``est-ce" fits this pattern, further enphasized by the hyphen. 
+
+\begin{enumerate}
+    \item[(3.2.1)]
+\begin{tabular}{ cccccc }
+    Qui & est- & ce & que & Lucas & connait \\
+    who$_i$ & is$_{3SG}$ & it & [ that & Lucas & know$_{3SG}$ $t_i$ ]
+\end{tabular}
+
+    ``Who does Lucas know?"
+\end{enumerate}
+
+This question resolves by reverting the verb to its non-inverted position, as shown in example 3.2.2.
+
+\begin{enumerate}
+    \item[(3.2.2)]
+\begin{tabular}{ cccccc }
+    C' & est & que & Lucas & connait & Olivier \\
+    It & is$_{3SG}$ & [ that & Lucas & know$_{3SG}$ & Oliver ]
+\end{tabular}
+
+    ``It is the case that Lucas knows Oliver."
+
+    ``Lucas knows Oliver."
+\end{enumerate}
+
+Figures 3.2.3 and 3.2.4 show two halves of a tree built using this interpretation. In particular, figure 3.2.1 shows the relationship between ``ce" and ``est", and together they show the movement of the WH phrase ``qui" from the object of the embedded verb up to the specifier of the embedded $CP$ and then to the specifier of the main $CP$.
+
+\begin{enumerate}
+    \item[(3.2.3)]
+\Tree
+[.CP 
+    \node{specCP}{}
+    [.C\1 
+        \node{Chead}{ C_{\substack{[+WH] \\ [+Q]}} }
+        [.TP 
+            \node{specTP}{_{NOM}} 
+            [.T\1 
+                \node{Thead}{T_{\substack{[NOM] \\ [pres]}}} 
+                [.vP 
+                    \node{subjDP}{ \qroof{\textit{ce}}.DP }
+                    [.v\1 \node{vhead}{v_{[ACC]}} 
+                        [.VP
+                            [
+                            ]
+                            [.V\1 
+                                V\\\node{Vhead}{\textit{est}}
+                                [.CP_i
+                                    \node{embspecCPorig}{ }
+                                    \node{later}{ \ldots }
+                                ]
+                            ]
+                        ]
+                    ]
+                ] 
+            ] 
+        ] 
+    ] 
+]
+
+\anodecurve[l]{subjDP}[b]{specTP}{0.6in}
+\anodecurve[l]{Vhead}[b]{vhead}{0.4in}
+\anodecurve[b]{vhead}[b]{Thead}{0.5in}
+\anodecurve[b]{Thead}[b]{Chead}{0.6in}
+\anodecurve[bl]{embspecCPorig}[b]{specCP}{1in}
+\anodecurve[br]{later}[bl]{embspecCPorig}{0.3in}
+
+    \item[(3.2.4)]
+\Tree
+[.CP_i 
+    \node{embspecCP}{} 
+    [.C\1 
+        %C_{\substack{[+WH] \\ [-Q]}}\\\textit{que}
+        C\\\textit{que}
+        [.TP
+            \node{embspecTP}{$_{NOM}$}
+            [.T\1
+                \node{embThead}{ T_{\substack{[NOM] \\ [pres]}} }
+                [.vP
+                    \node{Lucas}{ \qroof{\textit{Lucas}}.DP }
+                    [.v\1
+                        \node{embvhead}{v_{[ACC]}}
+                        [.VP
+                            [
+                            ]
+                            [.V\1
+                                V\\\node{embVhead}{\textit{connait}}
+                                \node{WH}{ \qroof{Qui}.DP_{ACC} }
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+]
+\anodecurve[l]{WH}[b]{embspecCP}{2.5in}
+\anodecurve[l]{embVhead}[b]{embvhead}{0.4in}
+\anodecurve[b]{embvhead}[b]{embThead}{0.5in}
+\anodecurve[l]{Lucas}[b]{embspecTP}{0.6in}
+
+\end{enumerate}
+
+This interpretation works quite well and does not produce any major syntactic problems for our model, all while respecting the literal meaning of each individual word in the sentence. However, it does rely on a rather strong assumption about the meaning of every ``est-ce que" sentence in a similar but more cumbersome way than the ``dummy do" analysis.
+
+\subsection{Relative Clause Interpretation}
+
+The third and final interpretation of ``est-ce que" which we consider in this paper is one which treats ``que" as an indication of a relative clause. The motivation for this interpretation is twofold. Firstly, while the tree in example 3.2.4 does not have any \textit{major} syntactic flaws, there exists one troubling occurrence: the presence of a WH word alongside the word ``que" not as a $_{+Q}$ element but instead as a standalone complementizer seems problematic, as it would be ungrammatical for the WH word to land in the specifier of the embedded $CP$ without being pulled farther up the tree. Secondly, there still should exist a syntactic interpretation which results in fewer semantic assumptions.
+
+In particular, we would like a structure which resolves the question in example 3.3.1 in a way similar to the response in example 3.3.2.
+
+\begin{enumerate}
+    \item[(3.3.1)]
+\begin{tabular}{ cccccc }
+    Qui & est- & ce & que & Lucas & connait \\
+    who$_i$ & is$_{3SG}$ & [ it & that & Lucas & know$_{3SG}$ $t_i$ ]
+\end{tabular}
+
+    ``Who does Lucas know"
+
+    \item[(3.3.2)]
+\begin{tabular}{ cccccc }
+    Ce & que & Lucas & connait & est & Olivier \\
+    .[ It/the one & that & Lucas & know$_{3SG}$ ] & is$_{3SG}$ & Oliver 
+\end{tabular}
+
+    ``The one that Lucas knows is Oliver."
+    
+    ``Lucas knows Oliver."
+\end{enumerate}
+
+The resolution shown in example 3.3.2 emphasizes that the speaker is asking for a noun which satisfies the desired qualities, in this case, being known by Lucas. While this may at first seem to be a rather contrived situation, it may be the case that the speaker is asking ``Qui est-ce que Lucas connait?" as a shorter version of ``Qui est la personne que Lucas connait?".
+
+\begin{enumerate}
+    \item[(3.3.3)]
+\Tree
+[.CP 
+    \node{specCP}{}
+    [.C\1 
+        \node{Chead}{ C_{\substack{[+WH] \\ [+Q]}} }
+        [.TP 
+            \node{specTP}{_{NOM}} 
+            [.T\1 
+                \node{Thead}{T_{\substack{[NOM] \\ [pres]}}} 
+                [.vP 
+                    \node{subjDP}{DP_i}
+                    [.v\1 \node{vhead}{v_{[ACC]}} 
+                        [.VP
+                            [
+                            ]
+                            [.V\1 
+                                V\\\node{Vhead}{\textit{est}}
+                                \node{WH}{ \qroof{\textit{Qui}}.DP_{ACC} }
+                            ]
+                        ]
+                    ]
+                ] 
+            ] 
+        ] 
+    ] 
+]
+\anodecurve[l]{subjDP}[b]{specTP}{0.6in}
+\anodecurve[l]{Vhead}[b]{vhead}{0.4in}
+\anodecurve[b]{vhead}[b]{Thead}{0.5in}
+\anodecurve[b]{Thead}[b]{Chead}{0.6in}
+\anodecurve[bl]{WH}[b]{specCP}{0.9in}
+
+    \item[(3.3.4)]
+\Tree
+[.DP_i 
+    \node{subjDP}{} 
+    [.D\1 
+        [.D\1
+            D\\$\varnothing$\\{[\textit{la}]}
+        ]
+        [.NP
+            [.N\1_j
+                N\\\textit{ce}\\{[\textit{personne}]}
+            ]
+            [.CP 
+                \node{embspecCP}{} 
+                [.C\1 
+                    C_{\substack{[+WH] \\ [-Q]}}\\\textit{que}
+                    [.TP
+                        \node{embspecTP}{$_{NOM}$}
+                        [.T\1
+                            \node{embThead}{ T_{\substack{[NOM] \\ [pres]}} }
+                            [.vP
+                                \node{Lucas}{ \qroof{\textit{Lucas}}.DP }
+                                [.v\1
+                                    \node{embvhead}{v_{[ACC]}}
+                                    [.VP
+                                        [
+                                        ]
+                                        [.V\1
+                                            V\\\node{embVhead}{\textit{connait}}
+                                            \node{OP}{ \qroof{OP_j}.DP_{ACC} }
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+]
+\anodecurve[bl]{OP}[b]{embspecCP}{1in}
+\anodecurve[l]{embVhead}[b]{embvhead}{0.4in}
+\anodecurve[b]{embvhead}[b]{embThead}{0.5in}
+\anodecurve[l]{Lucas}[b]{embspecTP}{0.6in}
+
+\end{enumerate}
+
+The trees shown in examples 3.3.3 and 3.3.4 show how an interpretation which treats the CP as a relative clause might be structured. Note that such a structure resolves one of the problems we saw with the ``case that" structure: there is a proper $_{+WH}$ on the $C$ head of the relative clause. This allows OP to be moved to the specifier of the embedded $CP$ just as it should be in our existing model.
+
+However, there is a substantial problem with this structure. The word ``ce" can be either a determiner or a pronoun, but it cannot stand alone as a noun, as this structure requires. Pronouns must be full $DP$s, and determiners cannot stand alone without a noun. Thus, there is no way for this $CP$ to modify ``ce".
+
+Furthermore, we see that OP, which is a placeholder for a $DP$, is coindexed with $N'$. This should not be the case. In fact, there is no way for the CP to be sister to another phrase level element while satisfying X-bar theory. This is a problem which faces not only this particular tree but all relative clause constructions in our current model, which is based on that of Carnie 2013. There must be a fundamental change in the structure of relative clauses in our model in order to properly handle traces of unknowns, be those handled by OP or otherwise.
+
+\section{Application of Zwart's Head Raising Analysis to French}
+
+Jan-Wouter Zwart proposed in 2000 a structure which might better handle the relative clause coindexing problem which we have encountered. Zwart argued that there is a strong relationship between the noun which is being modified by the relative clause and the elements inside the relative clause $CP$. In particular, Zwart proposed the structure shown in example 4.0.1.
+
+\begin{enumerate}
+    \item[(4.0.1)] \begin{enumerate}
+        \item[a.] $[_{DP}$ de [$_{CP1}$ [$_{CP3}$ [$_{IP}$ ik bemin [$_{DP_{rel}}$ die [$_{NP}$ man ]]]]]]
+        \item[b.] $[_{DP}$ de [$_{CP1}$ [$_{CP3}$ [$_{DP_{rel}}$ die [$_{NP}$ man ]$]_i$ [$_{IP}$ ik bemin $t_i$ ]]]]
+        \item[c.] $[_{DP}$ de [$_{CP1}$ [$_{NP}$ man $]_j$ [$_{CP3}$ [$_{DP_{rel}}$ die $t_j$ $]_i$ [$_{IP}$ ik bemin $t_i$ ]]]]
+    \end{enumerate}
+\end{enumerate}
+
+In 4.0.1 a. we see that the eventual complementizer ``die" begins as the determiner to ``man", and then the entire object $DP$ moves up to the specifier of the lower embedded $CP$. From there, the $NP$ containing ``man" moves up again to the specifier of the upper embedded $CP$, thus satisfying the required surface word order. Example 4.0.2 shows an adaptation of this structure to English.
+
+\begin{enumerate}
+    \item[(4.0.2)] \begin{enumerate}
+        \item[a.] $[_{DP}$ the [$_{CP1}$ [$_{CP3}$ [$_{IP}$ I know [$_{DP_{rel}}$ that [$_{NP}$ boy ]]]]]]
+        \item[b.] $[_{DP}$ the [$_{CP1}$ [$_{CP3}$ [$_{DP_{rel}}$ that [$_{NP}$ boy ]$]_i$ [$_{IP}$ I know $t_i$ ]]]]
+        \item[c.] $[_{DP}$ the [$_{CP1}$ [$_{NP}$ boy $]_j$ [$_{CP3}$ [$_{DP_{rel}}$ that $t_j$ $]_i$ [$_{IP}$ I know $t_i$ ]]]]
+    \end{enumerate}
+\end{enumerate}
+
+Here again we see that the movement proposed by Zwart does successfully account for the surface structure of relative clauses in English. However, Dutch and English are very close linguistic neighbors. Thus, as a third test, example 4.0.3 shows a French adaptation of the sentence from 4.0.2.
+
+\begin{enumerate}
+    \item[(4.0.3)] \begin{enumerate}
+        \item[a.] *$[_{DP}$ le [$_{CP1}$ [$_{CP3}$ [$_{IP}$ je connais [$_{DP_{rel}}$ ce [$_{NP}$ garçon ]]]]]]
+        \item[b.] *$[_{DP}$ le [$_{CP1}$ [$_{CP3}$ [$_{DP_{rel}}$ ce [$_{NP}$ garçon ]$]_i$ [$_{IP}$ je connais $t_i$ ]]]]
+        \item[c.] *$[_{DP}$ le [$_{CP1}$ [$_{NP}$ garçon $]_j$ [$_{CP3}$ [$_{DP_{rel}}$ ce $t_j$ $]_i$ [$_{IP}$ je connais $t_i$ ]]]]
+    \end{enumerate}
+\end{enumerate}
+
+The structure does not hold for French. In particular, this is the case because ``ce" cannot act as a complementizer. In both Dutch and English, the words ``die" and ``that", respectively, may function in different contexts as both determiners (as in ``I know that boy") and complementizers (as in ``The boy that I know"). It is thus more likely that the movement structure proposed by Zwart is a result of the particular vocabulary of Dutch (and its close sibling, English) rather than an inherent property of language.
+
+However, let us entertain the possibility of a similar structure in French and explore what conditions would be necessary for such a structure to function properly. Example 4.0.4 shows the French relative clause ``le garçon que je connais" deconstructed using the pattern proposed by Zwart.
+
+\begin{enumerate}
+    \item[(4.0.4)] \begin{enumerate}
+        \item[a.] $[_{DP}$ le [$_{CP1}$ [$_{CP3}$ [$_{IP}$ je connais [$_{DP_{rel}}$ que [$_{NP}$ garçon ]]]]]]
+        \item[b.] $[_{DP}$ le [$_{CP1}$ [$_{CP3}$ [$_{DP_{rel}}$ que [$_{NP}$ garçon ]$]_i$ [$_{IP}$ je connais $t_i$ ]]]]
+        \item[c.] $[_{DP}$ le [$_{CP1}$ [$_{NP}$ garçon $]_j$ [$_{CP3}$ [$_{DP_{rel}}$ que $t_j$ $]_i$ [$_{IP}$ je connais $t_i$ ]]]]
+    \end{enumerate}
+\end{enumerate}
+
+This construction satisfies the surface structure requirements. However, there is another problem with this structure: que is not a determiner. Instead, it acts similarly to the WH question ``what" and the relative pronoun ``that" in English, depending on the context. The proper determiner in this instance would be ``quel", meaning ``which".
+
+There is a possible explanation which could rectify this situation. The word ``ce" is a sort of generic pronoun. That is, it need not necessarily take on morphological changes to agree with the verb to which it is coindexed. For example, it is perfectly grammatical to say ``C'est une belle chienne", meaning ``It's a beautiful dog", despite the fact that both ``chienne" and the adjective ``belle" display morphological female gender marking, and that there exists a female version of ``ce", namely ``cette". 
+
+If we treat ``que" as a generic form of the male determiner ``quel", then one could argue that the phrase ``je connais quel garçon" is sufficiently similar to the phrase ``garçon que je connais" which is desired by Zwart.
+
+\subsection{Accounting for Relative Clauses in French}
+
+However, there remains the problem of mismatched coindexing in relative clauses in our existing model. Zwart's proposal may yet hold insight to address this problem. In the model proposed by Carnie, which forms the basis for our current model, the noun which is modified by a relative clause is always born outside the relative clause $CP$. However, in Zwart's example (4.0.1), the $DP$ which is the object of the embedded verb (which would be OP in our model) moves up to the specifier of that embedded $CP$. 
+
+Relative clauses have thus far been treated as adjunct (``sister") to the nouns which they modify. However, the phrase ``the fluffy dog that I see" is more related to ``I see the fluffy dog" than to ``I see dog", since the latter is lacking a determiner. Furthermore, as we have it now, OP is always a placeholder for a $DP$, rather than an individual noun. Pronouns can also be modified by relative clauses, though pronouns in our current model similarly replace the $DP$ as a whole. Thus, we need to reconsider the syntactic structure of relative clauses, both for English and for French.
+
+The structure of relative clauses must allow pronouns, and thus $DP$s in general, to be modified by the clauses. With the $DP$ outside the relative clause $CP$, there is not an easy way to allow this, since two phrase level elements (namely a $DP$ and a $CP$) cannot be sisters in the tree. Thus, consider a relative clause structure where the $DP$ being modified is born in place, where OP previously was born, and is then pulled to the specifier of the relative clause $CP$ just as OP was.
+
+Thus, there would not exist an external $DP$ at all; instead, if the $DP$ was modified by a relative clause (in the old model), in its place is instead the $CP$ relative clause. Any other modifications to the $DP$ happen to it before it moves to the specifier of the ``main" relative $CP$. Since relative clauses were adjunct to the noun, it is thus possible that the $DP$ being modified is actually a $CP$, just like the ``main" relative clause in question. Bar-level recurison is thus still possible. Thus, this structure accounts for both the coindexing problem and the pronoun modification problem which we encountered in section 3.3. A replacement for the relative clause tree 3.3.4 is shown in example 4.1.1.
+
+\begin{enumerate}
+    \item[(4.1.1)]
+\Tree
+[.CP_i 
+    \node{embspecCP}{} 
+    [.C\1 
+        C_{\substack{[+WH] \\ [-Q]}}\\\textit{que}
+        [.TP
+            \node{embspecTP}{$_{NOM}$}
+            [.T\1
+                \node{embThead}{ T_{\substack{[NOM] \\ [pres]}} }
+                [.vP
+                    \node{Lucas}{ \qroof{\textit{Lucas}}.DP }
+                    [.v\1
+                        \node{embvhead}{v_{[ACC]}}
+                        [.VP
+                            [
+                            ]
+                            [.V\1
+                                V\\\node{embVhead}{\textit{connait}}
+                                \node{ceque}{ \qroof{\textit{ce}\\{[\textit{la grande personne}]}}.DP_{ACC} }
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+]
+\anodecurve[bl]{ceque}[b]{embspecCP}{1.1in}
+\anodecurve[l]{embVhead}[b]{embvhead}{0.4in}
+\anodecurve[b]{embvhead}[b]{embThead}{0.5in}
+\anodecurve[l]{Lucas}[b]{embspecTP}{0.6in}
+\end{enumerate}
+
+\section{Conclusion}
+
+In this paper, we have considered three possible interpretations of ``est-ce que", each of which conveys a distinct semantic meaning. In the analysis of the relative clause interpretation of ``est-ce que", we have found that our current model fails to account for relative clauses which modify pronouns, and furthermore, that the modified noun is coindexed to OP, which is a $DP$. Thus, we have attempted to modify our model by considering a proposal by Jan-Wouter Zwart that calls for a head raising relative clause construction.
+
+We propose a new relative clause structure where the modified ``noun" is instead a $DP$ which is born in place and then moved to the specifier of the relative clause $CP$. This accounts for both the coindexing problem and the need to modify other $DP$s, such as pronouns, while preserving other necessary characteristics of relative clauses, such as recursion.
+%Zwart's proposal does not by itself account for the structure of French, but with some morphological flexibility, it nearly corresponds. However, Zwart's head raising analysis does serve as inspiration for a new relative clause structure where the modified ``noun" is actually a $DP$ which is born in place and then moved to the specifier of the relative clause $CP$.
+
+\section{References}
+
+Carnie, A. (2013). \textit{Syntax: A generative introduction}, Third Edition. John Wiley \& Sons.
+
+Senay, Eponine. French LA, Carleton College, 2019-2020. Provided essential native speaker grammaticality judgements, particularly of spoken French.
+
+Zwart, J. (2000).  \textit{A Head Raising Analysis of Relative Clauses in Dutch}, from Syntax of Relative Clauses, edited by Artemis Alexiadou, et al., John Benjamins Publishing Company.
+
+\end{document}

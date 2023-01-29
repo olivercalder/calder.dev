@@ -1,0 +1,310 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\DeclareMathOperator{\ct}{count}
+\DeclareMathOperator{\dg}{deg}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+
+\title{Sandpile Groups}
+\author{Oliver Calder and Evan David}
+\date{November 2020}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    In this paper, we explore ``sandpiles", which represent an arrangement of ``chips" on the vertices of a graph.  We build up an understanding of the form and behavior of sandpiles, as well as define notation which allows us to rigorously describe sandpiles.  We also prove various properties of sandpiles, such as that any unstable sandpile can be stabilized to a finite sandpile, and that the operation of adding sandpiles followed by stabilization is commutative.  From these, we define a ``sandpile group" of particular sandpiles over some graph.  We describe some properties of sandpile groups, and end with two examples.
+\end{abstract}
+
+\section{Introduction}
+
+Sandpiles are mathematical structures that have been invented independently several times throughout the history of mathematics \cite{levine}.  Sandpiles exhibit interesting algebraic behavior in that, while certain sandpiles can be combined to create groups, the binary operation of addition followed by stabilization is much less intuitive than operations typical to groups such as the integers and the dihedral groups.  As a result, the group behavior of sandpiles is much less obvious.  This paper spends the bulk of its effort covering the properties of sandpiles to argue that sandpiles, under certain circumstances, can be thought of as groups.  In the last section, we look at some example sandpile groups and observe how the properties of these groups interact with the properties of sandpiles.
+
+\section{What Are Sandpiles?}
+
+Consider a graph $G$ made by connecting vertices from a set $V$ using edges.  Firstly, we would like to assign each vertex of $G$ a degree, $d$, based on how many edges connect to that vertex.
+
+%connects to other vertices in the graph.   I think we allow vertices to connect to themselves, so this might restrict our definition too far
+
+\begin{definition}
+    For any graph $G$ with vertices $V$, the \underline{degree} of a vertex $v \in V$, denoted $\dg(v)$, is the number of ends-of-edges which connect to $v$. \cite{levine}
+\end{definition}
+
+\textit{Aside:}  Simple graphs are graphs where for any two distinct vertices $v_i$ and $v_j$, the number of edges between $v_i$ and $v_j$ is either 0 or 1, and for any vertex $v_i$, the number of edges directly connecting $v_i$ to itself is equal to 0.  For simple graphs, the degree of a vertex $v$ is equal to the number of connections leading from that vertex to another vertex in the graph that are direct, in that they do not pass through any intermediary vertices.
+
+Now at each vertex of the graph, we will place a non-negative amount of ``chips".
+\begin{definition}
+    The \underline{chip count} of a vertex $v$, denoted $\ct(v)$, is the number of chips at $v$.
+\end{definition}
+
+These chips can be thought of as poker chips, coins or any other indistinguishable item.  
+
+\begin{definition}
+    We call a vertex a \underline{stable vertex} if its chip count is less than its degree, if its chip count is greater than its degree we call it an \underline{unstable vertex} \cite{levine}
+\end{definition}
+For example, if a vertex $a$ has degree 4 and a chip count of seven, it is unstable.  If it has a chip count of 3, it is stable. 
+
+\begin{definition} \label{def:sandpile}
+    A \underline{sandpile} is a function which maps each vertex of a graph to a non-negative integer.  We call this non-negative integer the number of chips placed on that vertex. \cite{levine}
+\end{definition}
+
+The function mentioned in Definition \ref{def:sandpile} can be written out more formally.  For a graph $G$ with vertices $V$, as a sandpile $\sigma$ over $G$ is a function $\sigma: V \to \mathbb{Z}^+ + \{0\}$ given by $\sigma(v) = \ct(v)$.  For this paper, (and others in the literature \cite{levine}), we do not rely heavily on this function understanding of a sandpile. 
+
+Notice that we can add two sandpiles of a shared graph together quite simply, as the number of chips at any given vertex of the resulting sandpile is equal to the sum of the number of chips at that vertex in both of the initial sandpiles.  More formally, for a graph $G$ with vertices $V$, the sum of two sandpiles $\sigma$ and $\tau$ over $G$ is given by the function $\sigma + \tau: V \to \mathbb{Z}^+ + \{0\}$ by $(\sigma + \tau)(v) = \sigma(v) + \tau(v)$.
+
+\begin{lemma}
+    For sandpiles $\sigma$ and $\tau$ over a graph $G$, $\sigma + \tau = \tau + \sigma$
+\end{lemma}
+
+\begin{proof}
+    Take some vertex $a$.  We will denote the chip count of a vertex $a$ of a sandpile $\delta$ to be $\ct_\delta(a)$.  Using the fact that integer addition is commutative, and the definition of sandpile addition we can show that 
+    $\ct_{\sigma + \tau}(a)=
+    \ct_{\sigma}(a)+\ct_{\tau}(a)=
+    \ct_{\tau}(a)+\ct_{\sigma}(a)=
+    \ct_{\tau+\sigma}(a)$.   
+\end{proof}
+
+\begin{definition}
+      A \underline{stable sandpile} is a sandpile where the chip count of each vertex is less than the degree of the vertex.  If a sandpile has has one or more vertices in which the chip count is greater than or equal to the degree vertex we say it is an \underline{unstable sandpile}. \cite{levine}
+\end{definition}
+
+We can \textit{topple} an unstable vertex by distributing one chip from the vertex to each adjacent vertex which is connected via an edge to the vertex that is being toppled.  More formally, toppling a vertex moves one chip along each edge connected to that vertex.  It is possible that toppling one vertex may cause an adjacent vertex to also become unstable. \cite{levine}
+
+What would happen if we toppled a vertex that was stable?  The result would not be a sandpile, however mathematically it will prove useful to include these structures.  We will say that toppling a stable vertex results in an \textit{illegal sandpile}.
+
+\begin{definition}
+    An \underline{illegal sandpile}, is a function that maps the vertices of a graph to the integers, where at least one vertex is mapped to a negative integer.
+\end{definition}
+
+% Shorten this aside so that it references the aside above
+\textit{Aside:}  For this paper, we are primarily focused on simple graphs, which are graphs without multiple edges and without loops from a vertex to itself.  However, toppling behaves similarly on non-simple graphs as well.  For example, if more than one edge connects two vertices, then toppling one of those vertices causes more than one chip to be moved during toppling.  In particular, if $k$ edges connected two vertices $v_i$ and $v_j$, then $k$ chips are moved from $v_i$ to $v_j$ when $v_i$ is toppled.  Likewise, if a vertex is connected to itself via one or more loops, toppling that vertex moves one chip along each end-of-edge connected to that vertex back to itself, leaving the chip count unchanged due to the edges that loop from the vertex to itself.  Thus, loops from a vertex to itself have no effect on any other vertex on the graph, but they do increase the ``chip capacity" of the vertex, which is the maximum number of chips which can be on a given vertex before that vertex becomes unstable.  The properties of sandpiles over non-simple graphs are worthy of study.  However, for the rest of this paper, unless otherwise stated, assume that we are working with simple graphs, and that the phrase ``connected graph" means a \textit{simple undirected connected} graph.
+
+\subsection{Seeking Stability}
+
+We can use toppling to stabilize an unstable vertex.  For example, consider the complete graph $G$ with vertices $v_1,v_2,v_3 \in V$, where there is a single edge connecting each vertex, so $\dg(v_1) = \dg(v_2) = \dg(v_3) = 2$.  Let the sandpile $\sigma$ be given by $\ct(v_1) = \ct(v_2) = 0$, and $\ct(v_3) = 2$.  Since $\ct(v_3) \geq \dg(v_3)$, then $\sigma$ is unstable.  If we topple $v_3$, then we end up with a new sandpile $\tau$ with $\ct(v_1) = \ct(v_2) = 1$ and $\ct(v_3) = 0$, where $\tau$ is stable.  Thus, we successfully stabilized an unstable sandpile $\sigma$ into a stable sandpile $\tau$ using toppling.
+
+\begin{definition}
+    For a graph $G$ with vertices $V$, let the \underline{set of sandpiles over $G$} be denoted $Z^V$.  Let the \underline{set of stable sandpiles over $G$} be denoted $M = \{\sigma \in Z^V \, | \, \sigma \, \text{is stable}\}$ \cite{levine}.
+\end{definition}
+
+The majority of this paper focuses on finite graphs.  However, if we consider an infinite connected graph with finitely many chips on it, we see that over time, toppling unstable vertices will distribute the chips over more of the (infinite) vertices, and eventually achieve a stable sandpile \cite{glass}.  This is true, abstractly, due to entropy, but also follows intuitively from the behavior of toppling.  Thus, any sandpile with finitely many chips over an infinite graph can be stabilized.
+
+\begin{lemma} \label{lem:finite}
+    Let $G$ be a graph with vertices $V$, then if the total number of chips in a given sandpile $\sigma$ over $G$ is less than $\sum_{v \in V} (\dg(v) - 1)$, then $\sigma$ can be stabilized in a finite number of topples.
+\end{lemma}
+\begin{proof}
+    This follows from the fact that each topple distributes chips among vertices, and vertices can topple iff there are at least as many chips on the vertex as the degree of that vertex.  Since $G$ is connected, then the chips will become more evenly distributed over time.  Thus, after a finite number of topples, any unstable sandpile can be stabilized.
+    
+    This lemma also follows directly from Theorem \ref{thm:finite}, which will be discussed below.
+\end{proof}
+
+In a worst case scenario, consider the graph which is a line of $n$ vertices, with the first vertex having $(n - 2)$ chips and all other vertices having 0 chips.  One can visualize how, over time, the chips on the first vertex would propogate across the remaining vertices, finally reaching a stable sandpile with 0 chips on the first vertex and last vertex and 1 chip on all remaining vertices.
+
+We would like to introduce a method through which any unstable sandpile can become stable, but this is not yet possible for all finite graphs.  Consider a graph with three vertices, $v_1$, $v_2$ and $v_3$ in which each vertex is connected to the other two.  We then place one chip on vertices $v_1$ and $v_2$, and two chips on vertex $v_3$.  Vertex $v_3$ is unstable, so we topple it, but then vertices $v_1$ and $v_2$ are unstable.  In fact there exists no arrangement of these chips such that each vertex is stable, there are two many chips in the sandpile.  We need some way to remove chips from the graph.
+
+\begin{definition}
+    For a graph $G$ with vertices $V$, a \underline{sink} is a vertex $v_s \in V$ in a sandpile in which the chip count of $v_s$ is ignored, and any chip which lands in $v_s$ from the toppling of a nearby vertex is removed from the sandpile entirely.
+\end{definition}
+
+\textbf{Note:}  For this paper, we will restrict the placement of the sink so that the sink cannot be located at a vertex on the graph which if removed from the graph, would leave the graph no longer connected.  % Is this true?  Needs to be true in order to prove by induction that the number of topples to reach stabilization is finite, maybe.
+
+The addition of sinks allows us to remove chips from the sandpile.  If, in our above example, we assign $v_1$ to be the sink, then when we topple $v_3$, $v_2$ remains unstable, but a chip is ``lost" to the sink $v_1$.  When we then topple $v_2$ another chip is lost and we are left with a stable configuration, where $\ct(v_2)=0$ and $\ct(v_3)=1$.
+
+In general, we can stablilize a sandpile by toppling unstable vertices of the sandpile until every vertex is stable.  However, it remains to show that we can stabilize any sandpile in a finite number of topplings.
+
+\begin{theorem} \label{thm:finite}
+    For any connected graph $G$ with a vertex designated as the sink, any sandpile on $G$ with finitely many chips is reducible to a stabilized sandpile through a finite number of topplings.
+\end{theorem}
+\begin{proof}
+    Towards a contradiction, assume that an infinite number of topplings can occur to a sandpile $\sigma$ without $\sigma$ becoming stabilized.  Then there exists at least one vertex $v_j$ in the graph which is toppled an infinite number of times.  Since $v_j$ is toppled an infinite number of times, then it sends an infinite number of chips to each adjacent vertex.  Each of those adjacent vertices can thus be toppled an infinite number of times without the sandpile becoming stabilized.  Since the graph under $\sigma$ is connected, then every vertex on the graph can be reached from every other vertex on the graph, and thus every vertex on the graph receives an infinite number of chips from the infinite number of topples of its adjacent vertices, and can itself be toppled an infinite number of times.  If there is no sink, then this is possible with a finite number of chips.  However, since the sink is connected to at least one other vertex, then the sink receives an infinite number of chips from that vertex.  Therefore, the total number of chips in the sandpile must have been infinite, which is a contradiction.  Thus, with a finite number of chips on a sandpile over a graph with a sink, the sandpile must be stabilizable in a finite number of topples.
+\end{proof}
+
+
+\section{Vector Notation for Sandpiles}
+
+Consider again a connected graph $G$ with vertices $V$, where $|V| = n$.  Number the vertices in $V$ from 1 to $n$, so $v_i$ denotes the $i^{th}$ vertex for $1 \leq i \leq n$.  We can define the adjacency matrix of $G$ to be an $n \times n$ matrix $A$, where entries $a_{i, j}$ is equal to the number of edges between $v_i$ and $v_j$ for $v_i, v_j \in V$.  If $G$ is simple, then the diagonal entries $a_{i,i} = 0$ for all $1 \leq i \leq n$, and all non-diagonal entries are either 0 or 1.  For this $G$, we can also define the degree matrix of $G$ to be an $n \times n$ diagonal matrix $D$ with $d_{i,i} = \dg(v_i)$, and $d_{i, j} = 0$ for all $i \neq j$ \cite{glass}.
+
+Now, we can define the \textit{Laplacian} of $G$ as the $n \times n$ matrix $L = D - A$ \cite{glass}.  This matrix includes a row and column for the sink, so by removing that row and column, we can get the reduced Laplacian matrix \cite{glass}.  The $j^{th}$ column of this matrix nearly encodes the effects of toppling the $j^{th}$ vertex, but the result is actually the opposite.  Thus, if we negate the reduced Laplacian, we get an $(n - 1) \times (n - 1)$ matrix $\Delta$ where (from \cite{levine}) the entry in the $v$ row and $w$ column is given by
+\begin{align*}
+    \Delta_{v, w} = \begin{cases}
+    -\dg(v) &\quad \text{if} \, v = w \\
+    1 &\quad \text{if $v$ is adjacent to $w$} \\
+    0 &\quad \text{otherwise}
+    \end{cases}
+\end{align*}
+
+\begin{theorem}  \textbf{The Matrix-Tree Theorem:}
+    The number of spanning trees of $G$ is equal to the determinant of the reduced Laplacian matrix $\Delta$.  (This is discussed in \cite{levine} and \cite{glass}).
+\label{thm:matrix-tree}
+\end{theorem}
+
+Let $\Delta_j$ be the $j^{th}$ column of $\Delta$.  If we have a sandpile $\sigma$, then toppling the $j^{th}$ vertex is equivalent to adding $\Delta_j$ to $\sigma$.
+
+One immediate benefit of writing toppling in this vector notation is that it allows us to show that the \textit{order} in which we topple sandpiles does not matter
+
+\begin{theorem}
+    Let $\sigma$ be a sandpile with vertices $v_k$ and $v_j$. Then toppling $v_k$ and then $v_j$ will result in the same sandpile, legal or illegal, as toppling $v_j$ and then $v_k$.
+    \label{th:commutative}
+\end{theorem}
+\begin{proof}
+Take the two vertices $v_j$ and $v_k$.  We have shown that toppling a vertex, $v_j$, of a sandpile $\sigma$ can be expressed as the addition of two vectors $\sigma + \Delta_j$.  Then toppling $v_j$ and then $v_k$ is expressed as $\sigma + \Delta_j + \Delta_k$.  Because vector addition is commutative, $\sigma + \Delta_j + \Delta_k=\sigma + \Delta_k + \Delta_j$ regardless of which $v_j$, $v_k$ is chosen. 
+\end{proof}
+
+Since toppling is a commutative operation, then we can think about a series of topples as a single unit.
+
+\begin{definition}
+    A \underline{topple series} is a column vector encoding a sequence of topples, where the value in the $j^{th}$ entry in the column vector is equal to the number of times the $j^{th}$ vertex is toppled.
+\end{definition}
+
+We can represent a single toppling of $v_j$ as $t_j$, which is a unit vector with a 1 in the entry corresponding to $v_j$, and 0 in all other entries.  For some unstable sandpile $\sigma$ which can, by toppling $v_1$ $a$ times, toppling $v_2$ $b$ times, etc., produce another sandpile $\tau$ which may or may not be stable.  This topple series is given by $$\alpha = a t_1 + b t_2 + \ldots = \begin{bmatrix} a \\ b \\ \vdots \end{bmatrix}, \, \text{where} \, \sigma + \Delta \alpha = \tau.$$
+
+Any topple series $\alpha$ can be broken down into a sum of smaller topple series, where each topple series has nonzero values in each entry.  The sum of the entries in the topple series is the number of individual topples which form the topple series, and we call this sum the ``length" of the topple series.  A topple series whose entries sum to 1 encodes a single topple, $t_j$, corresponding to toppling vertex $v_j$; such a topple series can be said to have length 1.  It can be very useful to break down a topple series into a sum of topple series of length 1, or, equivalently, into individual topples.  In general, we denote the elements of a topple series $\alpha$ by the order which we carry them out, so a topple series of length $n$ can be represented as $\alpha = \alpha_1 + \alpha_2 + \ldots + \alpha_n$, where each $\alpha_j$ has length 1 and encodes a single toppling $t_k$ of a vertex, $v_k$.  Note that the $j$ in the subscript of $\alpha_j$ denotes the position of the topple in the topple series, while the $k$ in the subscript of $t_k$ denotes that $v_k$ is being toppled.  The subscripts of $\alpha_j$ and $t_k$ are unrelated.
+
+Furthermore, any topple series $\alpha$ can be broken down in several different ways.  For example, let $\alpha = \begin{bmatrix} 1 \\ 2 \\ 1 \end{bmatrix}$, so the length of $\alpha$ is 4.  Once we decide on the order in which the four topples takes place, we can represent these individual topples as $\alpha = \alpha_1 + \alpha_2 + \alpha_3 + \alpha_4$.  One such order is $\alpha_1 = t_2$, $\alpha_2 = t_1$, $\alpha_3 = t_3$, $\alpha_4 = t_2$.  Another equally valid order is $\alpha_1 = t_2$, $\alpha_2 = t_1$, $\alpha_3 = t_3$, $\alpha_4 = t_2$.  Note as well that since the order of topples is commutative, then $\alpha = \alpha_1 + \alpha_2 + \alpha_3 = \alpha_4 = \alpha_3 + \alpha_1 + \alpha_2 + \alpha_4 = \alpha$.  If $\sigma + \Delta \alpha$ is a legal sandpile, then it may be the case that after some number of $\alpha_j \in \alpha$ less than the length of $\alpha$, we have an illegal sandpile (i.e. a sandpile with a negative number of chips on some vertex).  This is acceptable, since we know that after completing all topples in $\alpha$, the resulting sandpile will again be legal.
+
+
+\section{Properties of Sandpiles}
+
+\begin{lemma}\label{Evan's Helpful Lemma}
+Let $\sum_{j = 1}^n \alpha_j$ be a toppling series, and $t_k$ is the toppling of a vertex $k$ where $t_k \neq \alpha_j$ for all $j$.  If $\sigma + \Delta t_k$ is a legal sandpile, and $\sigma + \Delta \sum_{j = 1}^i \alpha_j$ is a legal sandpile for all $i$ from 0 to $n$, then $\sigma + \Delta t_k + \Delta \sum_{j = 1}^i \alpha_j$ is also a legal sandpile for all $i$ from 0 to $n$.
+\end{lemma}
+\begin{proof}
+Towards a contradiction, assume that there exists some set of integers $I$ such that for all $i$ in $I$ $\sigma + \Delta t_k + \Delta \sum_{j = 1}^i \alpha_j$ is an illegal sandpile.  It is given that $\sigma + \Delta t_k$ is a legal sandpile, so there must be some $i$ in $I$ such that $\sigma + \Delta t_k + \Delta \sum_{j = 1}^{i-1} \alpha_j$ is a legal sandpile.  This implies that $a_i$ must topple a vertex that is unstable in $\sigma + \Delta \sum_{j = 1}^i \alpha_j$, but stable in $\sigma + \Delta t_k + \Delta \sum_{j = 1}^i \alpha_j$.  This means that $a_i=t_k$, but by assumption $t_k \neq a_j$ for all $j$.
+\end{proof}
+
+\begin{theorem} \label{thm:headache}
+    If two topple series $\alpha$ and $\beta$ are distinct and for some sandpile $\sigma$, both $\sigma + \Delta \alpha$ and $\sigma + \Delta \beta$ are not illegal, then either $\sigma + \alpha$ or $\sigma + \beta$ is unstable.
+\end{theorem}
+\begin{proof}
+    By induction.  Without loss of generality let $|\alpha| \geq |\beta|$.
+    
+    \textsc{Base case:}  $|\alpha|=1$.  $\alpha$ has one element, so this implies that there is a vertex in $\sigma$ that is unstable.  Because $\beta \neq \alpha$, $\sigma + \Delta \beta$ still has that unstable vertex, so the sandpile given by $\sigma + \Delta \beta$ is unstable.
+    
+    \textsc{Inductive step:}  Say that for any two topple series, $\gamma$ and $\zeta$, where $\gamma$ has length $n$ and $\zeta$ has length less than or equal to $n$, if both $\sigma + \Delta \gamma$ and $\sigma + \Delta \zeta$ are (legal) sandpiles, then either $\sigma + \Delta \gamma$ or $\sigma + \Delta \zeta$ is unstable.
+
+    Consider $\alpha=\alpha_1+\gamma$, a topple series of length $n+1$, and $\beta$ of length less than or equal to $\alpha$.  If the first element of $\alpha$, $\alpha_1$, is not an element of $\beta$, then the vertex toppled by $\alpha_1$ remains unstable in $\sigma + \Delta \beta$.  If $\alpha_1$ is in $\beta$, then $\beta$ can be written as $\beta_0+\alpha_1+\beta_1$ where $\alpha_1$ is not an element of $\beta_0$.  This can safely be rewritten as $\alpha_1 + \beta_0 + \beta_1$ by Lemma \ref{Evan's Helpful Lemma}.  This transforms $\sigma + \Delta \alpha$ into $(\sigma + \Delta \alpha_1) + \Delta \gamma$ and $\sigma + \Delta \beta$ into $(\sigma + \Delta \alpha_1) + \Delta \beta_0 + \Delta \beta_1$ where $\beta+\beta_1$ has a length less than or equal to the length of $\gamma$.
+\end{proof}
+
+\begin{corollary}
+    For any sandpile $\sigma$, stabilizing $\sigma$ will always result in the same stable sandpile.
+    \label{thm:unique}
+\end{corollary}
+\begin{proof}
+    Theorem \ref{thm:finite} gives that for any sandpile $\sigma$, $\sigma$ can be stabilized in a finite number of topples.  Theorem \ref{thm:headache} gives that for any initial sandpile $\sigma$ if two distinct topple series $\alpha$ and $\beta$ are applied to $\sigma$, then it cannot be the case that both $\sigma + \Delta \alpha$ and $\sigma + \Delta \beta$ are stable.  Therefore, there cannot be two distinct stable sandpiles which are stabilized from the same initial sandpile $\sigma$.
+\end{proof}
+
+\begin{theorem}
+    Let $\sigma_1$, $\sigma_2$ be sandpiles over a given graph $G$ with reduced Laplacian matrix $-\Delta$.  If there exists a vector $\alpha$ such that $\sigma_1 + \Delta \alpha = \sigma_2$, then $\alpha$ is unique.
+\end{theorem}
+\begin{proof}
+Imagine there exists two vectors $\alpha$ and $\beta$ with components $\alpha_1$, $\alpha_2$,..., $\alpha_n$ and $\beta_1$, $\beta_2$,..., $\beta_n$ such that $\sigma_1 + \Delta \alpha = \sigma_2$ and $\sigma_1 + \Delta \beta = \sigma_2$.  Then $\Delta \alpha = \Delta \beta$.  Expanding the vector-matrix multiplication yields
+$$\alpha_1\Delta_1 +\alpha_2\Delta_2 +... +\alpha_n\Delta_n = \beta_1\Delta_1 + \beta_2\Delta_2 + ... + \beta_n\Delta_n.$$
+We can then rearrange this equation to read 
+$$(\alpha_1-\beta_1)\Delta_1+(\alpha_2-\beta_2)\Delta_2+...+(\alpha_{n-1}+\beta_{n-1})\Delta_{n-1}=(\beta_n-\alpha_n)\Delta_n.$$
+The matrix $\Delta$ has a non-zero determinant \cite{glass}, which by a property of linear algebra implies that the columns of $\Delta$, where the $k^{th}$ column is denoted $\Delta_k$, are linearly independent vectors.  Therefore the only solution to this equation is 
+$$(\alpha_1-\beta_1)\Delta_1+(\alpha_2-\beta_2)\Delta_2+...+(\alpha_{n-1}+\beta_{n-1})\Delta_{n-1}=(\beta_n-\alpha_n)\Delta_n=0$$
+which, for linearly independent vectors implies that $\alpha_1-\beta_1=0$, $\alpha_2-\beta_2=0$, ..., $\alpha_n-\beta_n=0$, and thus $\alpha=\beta$. 
+\end{proof}
+
+\begin{corollary}
+    When stabilizing a sandpile, the number of times a specific vertex is toppled is independent of the sequence the vertices are toppled in. Further, every sequence of topples which stabilizes a sandpile will have an identical length.
+\end{corollary}
+
+\section{Sandpiles as Groups}
+
+There are several facts about sandpile groups which are worth stating, even if their proofs are beyond the scope of this paper.  They are listed here.
+
+\begin{theorem}
+    The set of all stable sandpiles on a graph, $M$, is a commutative monoid under sandpile addition followed by stabilization \cite{levine}.  That is to say for all $a$, $b$, $c$ in $M$
+    \begin{itemize}
+        \item $a+b$ is in $M$
+        \item $(a+b)+c=a+(b+c)$
+        \item There exists an $e$ such that $ae=ea=a$
+        \item $a+b = b+a$
+    \end{itemize}
+\end{theorem}
+Note that in the case of the above theorem the identity of $M$ is often not the identity of a group which happens to be a subset of $M$.
+\begin{definition}
+    The \underline{sandpile group} on a graph $G$, denoted $K(G)$, is the minimum ideal of $M$ \cite{levine}.
+\end{definition}
+
+\begin{theorem} \label{thm:independent}
+    $K(G)$ is independent of the choice of sink, up to isomorphism \cite{levine}.
+\end{theorem}
+This theorem can be worded as meaning that for some graph $G$ with vertices $a$ and $b$, the sandpile groups generated by selecting $a$ or $b$ as the sink, $K(G)_a$ and $K(G)_b$, are isomorphic; $K(G)_a \approx K(G)_b$. 
+\begin{theorem}
+    The sandpile group is an Abelian group under sandpile addition followed by stabilization \cite{levine}.
+    \label{thm:ideal}
+\end{theorem}
+
+\begin{theorem}
+    $K(G) = Z^V/\Delta Z^V$, and the determinant of $\Delta$ is the index of $\Delta Z^V$ in $Z^V$ (from \cite{levine}).
+    \label{thm:zvmod}
+\end{theorem}
+\textit{Aside:}  Since the determinant of $\Delta$ is the index of $\Delta Z^V$ in $Z^V$, then the determinant of $\Delta$ is equal to $|Z^V/\Delta Z^V| = |K(G)|$.  This gives us a relatively easy way to determine the order of $K(G)$ for any graph $G$, since $\Delta$ can be computed for any $G$.
+
+\begin{corollary} \label{c:order}
+    The order of $K(G)$ is equal to the number of spanning trees of $G$.
+\end{corollary}
+\begin{proof}
+    This follows from Theorems \ref{thm:matrix-tree} and \ref{thm:zvmod}.
+\end{proof}
+
+\subsection{An Example Group}
+
+Let's consider the graph, $G$, of four vertices, $s$, $a$, $b$ and $c$ connected by four edges where $s$ only connects with $a$, $b$ connects to $a$ and $c$, and $c$ also connects to $a$ as seen in Fig. \ref{fig:example}.  If we identify $s$ as the sink, can we create a group out of the different stable sandpiles on this graph? 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=50mm]{graph.jpg}
+    \caption{An example graph, $G$.  If we take $s$ to be the sink, $a$ has degree 3 and $b$ and $c$ have degree 2.  There are twelve unique stable sandpiles on $G$.  $G$ also contains three spanning trees, implying that $|K(G)|=3$.  The reduced Laplacian matrix of $G$ is $\Delta$, given by \\ $\Delta=\begin{bmatrix} -3 & 1 & 1 \\ 1 & -2 & 1 \\ 1 & 1 & -2 \end{bmatrix}.$}
+    \label{fig:example}
+\end{figure}
+
+If we use the vector notation $\sigma = \begin{bmatrix} \ct(a) \\ \ct(b) \\ \ct(c)
+\end{bmatrix}$ to denote a stable sandpile.  We can find $M$, the set of all stable sandpiles on $G$ to have elements
+
+$\begin{bmatrix}0 \\ 0 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 1 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 0 \\ 1 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 1 \\ 1 \end{bmatrix}$,
+$\begin{bmatrix}1 \\ 0 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}1 \\ 1 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}1 \\ 0 \\ 1 \end{bmatrix}$,
+$\begin{bmatrix}1 \\ 1 \\ 1 \end{bmatrix}$,
+$\begin{bmatrix}2 \\ 0 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}2 \\ 1 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}2 \\ 0 \\ 1 \end{bmatrix}$ and
+$\begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix}$.
+
+$M$ has 12 elements, does this mean that $M$ is a group under addition followed by stabilization isomorphic to either $\mathbb{Z}/12\mathbb{Z}$ or $\mathbb{Z}/6\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z}$?  Interestingly the answer is no \cite{levine} \cite{glass}.  While $M$ is closed, associative and has an identity element, not every element has an inverse.  In fact $\begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix} + \begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix}$, suggesting that if $\begin{bmatrix}0 \\ 0 \\ 0 \end{bmatrix}$ were the identity of $M$, $\begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix}$ would have infinite order.  This is not allowed in a finite group.  
+
+The set $H= \left\{\begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix}2 \\ 0 \\ 1 \end{bmatrix}, \begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix} \right\}$ is, however, a group under addition with $e=\begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix}$.  As far as we are aware there is no perfect method for finding this group, however Theorem \ref{thm:ideal} \& Corollary \ref{c:order} were helpful in constructing this group.  While we did not prove that in this case $H=K(G)$ we did notice that $|H|=|K(G)|$ as predicted from Corollary \ref{c:order}, and $\sigma K(G)$ was contained in $K(G)$ for all $\sigma$ we calculated, suggesting that $H=K(G)$ by Theorem $\ref{thm:ideal}$.  For example, we calculated that $\Bigg\{\begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix}, \begin{bmatrix}0 \\ 1 \\ 1\end{bmatrix}, \begin{bmatrix}1 \\ 1 \\ 1\end{bmatrix} \Bigg\} + \begin{bmatrix}2\\1\\1\end{bmatrix} = \begin{bmatrix}2 \\ 1 \\ 1\end{bmatrix}$.  While we would need to calcualte this for every element of $M$ in order to prove that $H=K(G)$, this is strong evidence.
+
+\subsection{A Different Sink}
+
+Let us consider the same graph $G$ as shown in Fig. \ref{fig:example} from the previous subsection, but this time choose $c$ to be the sink.  We will then define a sandpile $\sigma$ using the notation $\sigma = \begin{bmatrix} \ct(s) \\ \ct(a) \\ \ct(b)\end{bmatrix}$.  The elements of the new $M$ for this sink are   
+$\begin{bmatrix}0 \\ 0 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 1 \\ 0 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 0 \\ 1 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 1 \\ 1 \end{bmatrix}$,
+$\begin{bmatrix}0 \\ 2 \\ 0 \end{bmatrix}$ and
+$\begin{bmatrix}0 \\ 2 \\ 1 \end{bmatrix}$.  The observation that we now have an $M$ of order 6 instead of order 12 is not entirely surprising as we replaced our sink of order 1 with a sink of order 2.
+
+If Corollary \ref{c:order} is accurate, the order of $K(G)$ should remain at 3 despite the decrease in $M$.  The set $F= \left\{\begin{bmatrix}0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix}0 \\ 2 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 2 \\ 1 \end{bmatrix} \right\}$ turns out to be a group with $e=\begin{bmatrix}2 \\ 1 \\ 1 \end{bmatrix}$, although again we did not prove that $F$ is \textit{the} sandpile group for this graph and sink we are fairly confident it is.  The fact that $H \approx F \approx \mathbb{Z}/3 \mathbb{Z}$ is another interesting result predicted by Theorem \ref{thm:independent}, which lends credence to our belief that $H$ and $F$ are the sandpile groups.  
+
+
+\bibliographystyle{unsrt}
+\bibliography{sources}
+
+\end{document}
